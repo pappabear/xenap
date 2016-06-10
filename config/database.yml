@@ -1,0 +1,13 @@
+development:
+  host: localhost
+  adapter: mysql2
+  database: xena
+  username: <%= ENV['MYSQL_USERNAME'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
+
+test:
+  host: localhost
+  adapter: mysql2
+  database: xena_TEST
+  username: <%= ENV['MYSQL_USERNAME'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
