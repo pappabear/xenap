@@ -16,7 +16,7 @@ class StampsController < ApplicationController
       if @stamp.save!
         format.html {
           flash[:success] = "Stamp was successfully created."
-          redirect_to index_path
+          redirect_to stamps_path
         }
         format.json { render :show, status: :created, location: @stamp }
       else

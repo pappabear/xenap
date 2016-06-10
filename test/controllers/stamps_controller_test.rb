@@ -16,13 +16,13 @@ class StampsControllerTest < ActionController::TestCase
 
 
   test "should get show" do
-    get :show
+    get :show, id: @some_stamp
     assert_response :success
   end
 
 
   test "should get edit" do
-    get :edit
+    get :edit, id: @some_stamp
     assert_response :success
   end
 
