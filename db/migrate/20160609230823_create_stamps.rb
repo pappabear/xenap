@@ -4,7 +4,7 @@ class CreateStamps < ActiveRecord::Migration
       t.string :country_name
       t.string :sub_country_name
       t.string :set_description
-      t.string :set_text
+      t.text :set_text
       t.string :set_designer
       t.string :set_start_year
       t.string :set_start_month
