@@ -1,5 +1,8 @@
 require 'csv'
 
+puts 'Purging any old stamp data...'
+Stamp.destroy_all
+
 puts 'Importing France stamp data into MySQL...'
 
 CSV.foreach("db/stamps.france.csv", headers: true) do |row|

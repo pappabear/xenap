@@ -59,7 +59,7 @@ class StampsController < ApplicationController
 
 
   def index
-    @stamps = Stamp.all
+    @stamps = Stamp.paginate(page: params[:page])
   end
 
 

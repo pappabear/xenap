@@ -1,2 +1,17 @@
-<h1>Stamps#show</h1>
-<p>Find me in app/views/stamps/show.html.erb</p>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <table>
+          <% @stamp.attribute_names.each do |f| %>
+          <tr>
+            <td><label><%= f %>:</label></td>
+            <td><%= @stamp[f] %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+
+
+
