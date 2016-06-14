@@ -7,8 +7,10 @@
     <table class="table">
       <thead>
       <tr>
-        <th>Venue</th>
-        <th class="text-right">Actions</th>
+        <th>Country</th>
+        <th>SubCountry</th>
+        <th>SG Number</th>
+        <th class="text-right"></th>
       </tr>
       </thead>
 
@@ -16,7 +18,9 @@
 
       <% @stamps.each do |stamp| %>
           <tr>
-            <td> <%= stamp.country_name %> | <%= link_to stamp.sg_number, stamp %>
+            <td><%= stamp.country_name %></td>
+            <td><%= stamp.sub_country_name %></td>
+            <td><%= link_to stamp.sg_number, stamp %></td>
           </tr>
       <% end %>
 

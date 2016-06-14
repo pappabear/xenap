@@ -42,6 +42,7 @@ CSV.foreach("db/stamps.gb.csv", headers: true) do |row|
   h = row.to_hash
   Stamp.create!(:country_name => h['country_name'],
                 :sub_country_name => h['sub_country_name'],
+                #--- SET level fields
                 :set_description => h['set_description'],
                 :set_text => h['set_text'],
                 :set_designer => h['set_designer'],
@@ -54,6 +55,7 @@ CSV.foreach("db/stamps.gb.csv", headers: true) do |row|
                 :set_perf_info => h['set_perf_info'],
                 :set_type_number => h['set_type_number'],
                 :set_watermark_number => h['set_watermark_number'],
+                #--- STAMP level fields
                 :sg_number => h['sg_number'],
                 :stamp_prefix => h['stamp_prefix'],
                 :stamp_sg_number => h['stamp_sg_number'],
