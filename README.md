@@ -18,7 +18,7 @@ This setup assume you have MySQL running locally.
 
 * Clone the repo.
 * run ```bundle install```
-* run ```rake db:create && db:migrate```
+* run ```rake db:create && db:migrate && db:seed```
 
 ## Running the app
 
