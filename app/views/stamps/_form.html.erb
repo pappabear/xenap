@@ -1,0 +1,149 @@
+<%= form_for @stamp do |f| %>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:country_name].blank? %>">
+      <%= f.label :country_name %>
+      <%= f.text_field :country_name, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:sub_country_name].blank? %>">
+      <%= f.label :sub_country_name %>
+      <%= f.text_field :sub_country_name, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_description].blank? %>">
+      <%= f.label :set_description %>
+      <%= f.text_field :set_description, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_text].blank? %>">
+      <%= f.label :set_text %>
+      <%= f.text_area :set_text, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_designer].blank? %>">
+      <%= f.label :set_designer %>
+      <%= f.text_field :set_designer, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_start_year].blank? %>">
+      <%= f.label :set_start_year %>
+      <%= f.text_field :set_start_year, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_start_month].blank? %>">
+      <%= f.label :set_start_month %>
+      <%= f.text_field :set_start_month, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_start_day].blank? %>">
+      <%= f.label :set_start_day %>
+      <%= f.text_field :set_start_day, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_end_year].blank? %>">
+      <%= f.label :set_end_year %>
+      <%= f.text_field :set_end_year, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_end_month].blank? %>">
+      <%= f.label :set_end_month %>
+      <%= f.text_field :set_end_month, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_end_day].blank? %>">
+      <%= f.label :set_end_day %>
+      <%= f.text_field :set_end_day, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_perf_info].blank? %>">
+      <%= f.label :set_perf_info %>
+      <%= f.text_field :set_perf_info, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_type_number].blank? %>">
+      <%= f.label :set_type_number %>
+      <%= f.text_field :set_type_number, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:set_watermark_number].blank? %>">
+      <%= f.label :set_watermark_number %>
+      <%= f.text_field :set_watermark_number, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:sg_number].blank? %>">
+      <%= f.label :sg_number %>
+      <%= f.text_field :sg_number, class: 'form-control border-input', autofocus: true, readonly: 'readonly' %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_prefix].blank? %>">
+      <%= f.label :stamp_prefix %>
+      <%= f.text_field :stamp_prefix, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_prefix].blank? %>">
+      <%= f.label :stamp_prefix %>
+      <%= f.text_field :stamp_prefix, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_sg_number].blank? %>">
+      <%= f.label :stamp_sg_number %>
+      <%= f.text_field :stamp_sg_number, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_pre_suffix].blank? %>">
+      <%= f.label :stamp_pre_suffix %>
+      <%= f.text_field :stamp_pre_suffix, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_suffix].blank? %>">
+      <%= f.label :stamp_suffix %>
+      <%= f.text_field :stamp_suffix, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_description].blank? %>">
+      <%= f.label :stamp_description %>
+      <%= f.text_field :stamp_description, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:variety_description].blank? %>">
+      <%= f.label :variety_description %>
+      <%= f.text_field :variety_description, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_issue_price].blank? %>">
+      <%= f.label :stamp_issue_price %>
+      <%= f.text_field :stamp_issue_price, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_type_number].blank? %>">
+      <%= f.label :stamp_type_number %>
+      <%= f.text_field :stamp_type_number, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_unused].blank? %>">
+      <%= f.label :stamp_unused %>
+      <%= f.text_field :stamp_unused, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:stamp_used].blank? %>">
+      <%= f.label :stamp_used %>
+      <%= f.text_field :stamp_used, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+    <div class="form-group <%= "has-error".html_safe unless @stamp.errors[:variety_flag].blank? %>">
+      <%= f.label :variety_flag %>
+      <%= f.text_field :variety_flag, class: 'form-control border-input', autofocus: true %>
+    </div>
+
+
+
+    <%= f.submit "Save", class: "btn btn-success btn-fill btn-block" %>
+    <%= link_to "Delete", @stamp, method: :delete, class: 'btn btn-block btn-fill btn-danger' %>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+<% end %>
+
