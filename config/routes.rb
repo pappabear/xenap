@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :stamps
-  root                'stamps#index'
+  get '/stamps/:id/set' => 'stamps#set', as: 'set'
+  root 'stamps#index'
 
 end

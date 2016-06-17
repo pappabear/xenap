@@ -11,7 +11,7 @@
         <th>Country</th>
         <th>SubCountry</th>
         <th>SG Number</th>
-        <th class="text-right"></th>
+        <th class="text-right">Navigate</th>
       </tr>
       </thead>
 
@@ -21,7 +21,12 @@
           <tr>
             <td><%= stamp.country_name %></td>
             <td><%= stamp.sub_country_name %></td>
-            <td><%= link_to stamp.sg_number, stamp %></td>
+            <td><%= stamp.sg_number %></td>
+            <td>
+              <%= link_to '[View STAMP page]', stamp %> |
+              <%= link_to '[View SET page]', set_path(stamp) %> |
+              <%= link_to '[Edit stamp]', edit_stamp_path(stamp) %>
+            </td>
           </tr>
       <% end %>
 

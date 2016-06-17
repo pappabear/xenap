@@ -1,7 +1,7 @@
 class StampsController < ApplicationController
+  include StampsHelper
 
-
-  before_action :set_stamp, only: [:show, :edit, :update, :destroy]
+  before_action :set_stamp, only: [:show, :edit, :update, :destroy, :set]
 
 
   def new
@@ -60,6 +60,11 @@ class StampsController < ApplicationController
 
   def index
     @stamps = Stamp.paginate(page: params[:page])
+  end
+
+
+  def set
+    @set = find_stamps_in_set_with(@stamp)
   end
 
 

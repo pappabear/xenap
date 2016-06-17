@@ -1,0 +1,29 @@
+<div class="wrapper">
+  <div class="main">
+    <div class="section">
+      <div class="container">
+        <div class="col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
+          <h3 class="title-uppercase"><%= @stamp.country_name %></h3>
+          <h5 class="title-uppercase"><%= @stamp.sub_country_name %></h5>
+
+          <p><%= @stamp.set_designer %></p>
+          <p><b><%= @stamp.set_start_year %></b> (<%= @stamp.set_start_day %> <%= @stamp.set_start_month %>)-<b><%= @stamp.set_end_year %></b> <%= @stamp.set_description %></p>
+          <table>
+            <% @set.each do |stamp| %>
+                <tr <%= "bgcolor='yellow'".html_safe if stamp.sg_number == @stamp.sg_number %>>
+                  <td><%= stamp.sg_number %></td>
+                  <td><%= stamp.stamp_issue_price %></td>
+                  <td><%= stamp.stamp_description %></td>
+                  <td><%= stamp.stamp_unused %></td>
+                  <td><%= stamp.stamp_used %></td>
+                </tr>
+            <% end %>
+          </table>
+          <p>&nbsp;</p>
+          <p><%= @stamp.set_text %></p>
+          <%= link_to 'Back to list', stamps_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
