@@ -19,10 +19,13 @@ This setup assume you have MySQL running locally.
 * Clone the repo.
 * run ```bundle install```
 * run ```rake db:create && db:migrate && db:seed```
+* run ```rake enrich_catalog_data```
 
 ## Running the app
 
-Today, just run puma locally with ```rails s``` and point a browser at http://localhost:3000/stamps.
+You MUST run this in Safari today, since the prototype is dealing with TIFs.
+
+Today, just run puma locally with ```rails s``` and point Safari at http://localhost:3000/stamps.
 
 ## Contributing
 

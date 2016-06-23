@@ -1,6 +1,6 @@
 desc 'Beginning to enrich the catalog data in the database...'
 puts '+----------------------------------------------------------------------'
-puts '| Beginning to enrich the catalog data in the database in *3* steps...'
+puts '| Beginning to enrich the catalog data in the database in  T H R E E  steps...'
 
 task :enrich_catalog_data => :environment do
   puts '| Step 1: Remove the hardcoded string NULL...'
@@ -106,7 +106,7 @@ task :enrich_catalog_data => :environment do
 
   puts '| Step 3: Replace the string [gap] with a blank...'
   Stamp.all.each do |stamp|
-    stamp.set_text.gsub '[gap]', ' ' unless stamp.set_text.nil?
+    stamp.set_text = stamp.set_text.gsub('[gap]', ' ') unless stamp.set_text.nil?
     stamp.save!
   end
 
