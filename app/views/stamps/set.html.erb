@@ -6,6 +6,7 @@
           <h3 class="title-uppercase"><%= @stamp.country_name %></h3>
           <h5 class="title-uppercase"><%= @stamp.sub_country_name %></h5>
 
+          <p><img src="<%= @stamp.image_url %>" /></p>
           <p><%= @stamp.set_designer %></p>
           <p><b><%= @stamp.set_start_year %></b> (<%= @stamp.set_start_day %> <%= @stamp.set_start_month %>)-<b><%= @stamp.set_end_year %></b> <%= @stamp.set_description %></p>
           <table>

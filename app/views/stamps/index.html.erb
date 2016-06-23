@@ -23,9 +23,8 @@
             <td><%= stamp.sub_country_name %></td>
             <td><%= stamp.sg_number %></td>
             <td>
-              <%= link_to '[View STAMP page]', stamp %> |
-              <%= link_to '[View SET page]', set_path(stamp) %> |
-              <%= link_to '[Edit stamp]', edit_stamp_path(stamp) %>
+              <%= link_to 'View', set_path(stamp) %> |
+              <%= link_to 'Edit', edit_stamp_path(stamp) %>
             </td>
           </tr>
       <% end %>
