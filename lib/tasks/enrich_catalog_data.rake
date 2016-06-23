@@ -1,6 +1,6 @@
 desc 'Beginning to enrich the catalog data in the database...'
 puts '+----------------------------------------------------------------------'
-puts '| Beginning to enrich the catalog data in the database in *2* steps...'
+puts '| Beginning to enrich the catalog data in the database in *3* steps...'
 
 task :enrich_catalog_data => :environment do
   puts '| Step 1: Remove the hardcoded string NULL...'
@@ -43,8 +43,8 @@ task :enrich_catalog_data => :environment do
 
   Stamp.all.each do |stamp|
 
-    puts '-----'
-    puts stamp.country_name + ' SG' + stamp.sg_number + ' ' + (stamp.set_description == nil ? 'null' : stamp.set_description)
+    #puts '-----'
+    #puts stamp.country_name + ' SG' + stamp.sg_number + ' ' + (stamp.set_description == nil ? 'null' : stamp.set_description)
 
     # if all fields are null its all fubar
     if stamp.stamp_type_number.nil? && stamp.set_description.nil? && s == ""
@@ -96,12 +96,21 @@ task :enrich_catalog_data => :environment do
       i += 1
       url_determined = true
     end
-    puts 'image_url=' + stamp.image_url
+    # puts 'image_url=' + stamp.image_url
     stamp.save!
     previous_stamp = stamp
     n += 1
     url_determined = false
   end
+
+
+  puts '| Step 3: Replace the string [gap] with a blank...'
+  Stamp.all.each do |stamp|
+    stamp.set_text.gsub '[gap]', ' ' unless stamp.set_text.nil?
+    stamp.save!
+  end
+
+
   puts '| Catalog data enrichment job complete.'
   puts '+----------------------------------------------------------------------'
   puts n.to_s + ' stamps examined. ' + i.to_s + ' stamps enriched.'
