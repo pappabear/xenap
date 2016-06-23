@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609230823) do
+ActiveRecord::Schema.define(version: 20160621103244) do
 
   create_table "stamps", force: :cascade do |t|
     t.string   "country_name",         limit: 255
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160609230823) do
     t.string   "variety_flag",         limit: 255
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.string   "image_url",            limit: 255
   end
 
 end
