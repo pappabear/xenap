@@ -12,6 +12,10 @@ gem 'sdoc',         '0.4.0', group: :doc
 gem 'mysql2'
 gem 'jquery-turbolinks'
 
+gem 'nokogiri', '1.6.0'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 gem 'bootstrap-sass'  #,                  # adds Bootstrap
 gem 'bcrypt',               '3.1.7'       # for encryption
 gem 'faker'

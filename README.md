@@ -23,9 +23,9 @@ This setup assume you have MySQL running locally.
 
 ## Running the app
 
-You MUST run this in Safari today, since the prototype is dealing with TIFs.
+Get a local ElasticSearch server running.  Use my [docker image](https://github.com/pappabear/docker-container-for-elasticsearch) or homebrew.
 
-Today, just run puma locally with ```rails s``` and point Safari at http://localhost:3000/stamps.
+Today, just run puma locally with ```rails s``` and point Safari at http://localhost:3000. You MUST run this in Safari today, since the prototype is dealing with TIFs.
 
 ## Contributing
 
