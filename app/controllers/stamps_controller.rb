@@ -1,7 +1,7 @@
 class StampsController < ApplicationController
   include StampsHelper
 
-  before_action :set_stamp, only: [:show, :edit, :update, :destroy, :set]
+  before_action :set_stamp, only: [:show, :edit, :update, :destroy]
 
 
   def new
@@ -59,11 +59,19 @@ class StampsController < ApplicationController
 
 
   def index
-    @stamps = Stamp.paginate(page: params[:page])
+    @stamps = Stamp.page(params[:page])
+  end
+
+
+  # GET /articles/search
+  def search
+    @stamps = Stamp.search(params[:q]).page(params[:page]).records
+    render action: "index"
   end
 
 
   def set
+    @stamp = Stamp.find(params[:id])
     @set = find_stamps_in_set_with(@stamp)
   end
 

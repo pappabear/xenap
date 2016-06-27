@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :stamps
+  resources :stamps do
+    collection { get :search }
+  end
+
   get '/stamps/:id/set' => 'stamps#set', as: 'set'
-  get 'search', to: 'search#search'
-  root 'search#search'
+
+  root 'stamps#index'
 
 end
