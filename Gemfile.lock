@@ -82,6 +82,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    colorize (0.8.0)
     columnize (0.9.0)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
@@ -245,6 +246,7 @@ DEPENDENCIES
   bootstrap-sass
   byebug (= 3.4.0)
   coffee-rails (= 4.1.0)
+  colorize
   elasticsearch!
   elasticsearch-model!
   elasticsearch-rails!

@@ -17,15 +17,14 @@ Best case scenario: we have a working asset that needs to be productized.
 This setup assume you have MySQL running locally.
 
 * Clone the repo.
-* run ```bundle install```
-* run ```rake db:create && db:migrate && db:seed```
-* run ```rake enrich_catalog_data```
+* Run ```bundle install```
+* Run ```rake db:create && db:migrate```
 
 ## Running the app
 
-Get a local ElasticSearch server running.  Use my [docker image](https://github.com/pappabear/docker-container-for-elasticsearch) or homebrew.
+Run ```ruby runme.rb```
 
-Today, just run puma locally with ```rails s``` and point Safari at http://localhost:3000. You MUST run this in Safari today, since the prototype is dealing with TIFs.
+Point Safari at http://localhost:3000. You MUST run this in Safari today, since the prototype is dealing with TIFs.
 
 ## Contributing
 

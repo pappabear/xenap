@@ -23,7 +23,7 @@ gem 'bcrypt',               '3.1.7'       # for encryption
 gem 'faker'
 
 gem 'puma'
-
+gem 'colorize'
 
 group :development, :test do
   gem 'byebug',      '3.4.0'

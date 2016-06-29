@@ -1,0 +1,31 @@
+[2016-06-27 14:33:29,712][INFO ][node                     ] [Mentus] version[1.0.1], pid[7830], build[5c03844/2014-02-25T15:52:53Z]
+[2016-06-27 14:33:29,712][INFO ][node                     ] [Mentus] initializing ...
+[2016-06-27 14:33:29,714][INFO ][plugins                  ] [Mentus] loaded [], sites []
+[2016-06-27 14:33:31,186][INFO ][node                     ] [Mentus] initialized
+[2016-06-27 14:33:31,186][INFO ][node                     ] [Mentus] starting ...
+[2016-06-27 14:33:31,283][INFO ][transport                ] [Mentus] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, publish_address {inet[/10.116.54.245:9300]}
+[2016-06-27 14:33:34,313][INFO ][cluster.service          ] [Mentus] new_master [Mentus][5VI95RbNS3SxzEhErrG4sA][Chips15incher.local][inet[/10.116.54.245:9300]], reason: zen-disco-join (elected_as_master)
+[2016-06-27 14:33:34,367][INFO ][discovery                ] [Mentus] elasticsearch/5VI95RbNS3SxzEhErrG4sA
+[2016-06-27 14:33:34,380][INFO ][http                     ] [Mentus] bound_address {inet[/0:0:0:0:0:0:0:0:9200]}, publish_address {inet[/10.116.54.245:9200]}
+[2016-06-27 14:33:34,391][INFO ][gateway                  ] [Mentus] recovered [0] indices into cluster_state
+[2016-06-27 14:33:34,392][INFO ][node                     ] [Mentus] started
+[2016-06-27 14:34:16,042][INFO ][cluster.metadata         ] [Mentus] [articles] creating index, cause [api], shards [5]/[1], mappings [article]
+[2016-06-27 14:34:17,948][INFO ][cluster.metadata         ] [Mentus] [articles] update_mapping [article] (dynamic)
+[2016-06-27 14:38:18,431][INFO ][cluster.metadata         ] [Mentus] [articles] deleting index
+[2016-06-27 14:38:18,468][INFO ][cluster.metadata         ] [Mentus] [articles] creating index, cause [api], shards [5]/[1], mappings [article]
+[2016-06-27 14:38:20,174][INFO ][cluster.metadata         ] [Mentus] [articles] update_mapping [article] (dynamic)
+[2016-06-27 14:38:46,693][INFO ][node                     ] [Mentus] stopping ...
+[2016-06-27 14:38:46,726][INFO ][node                     ] [Mentus] stopped
+[2016-06-27 14:38:46,726][INFO ][node                     ] [Mentus] closing ...
+[2016-06-27 14:38:46,732][INFO ][node                     ] [Mentus] closed
+[2016-06-27 14:39:50,081][INFO ][node                     ] [Genis-Vell] version[1.0.1], pid[7966], build[5c03844/2014-02-25T15:52:53Z]
+[2016-06-27 14:39:50,082][INFO ][node                     ] [Genis-Vell] initializing ...
+[2016-06-27 14:39:50,084][INFO ][plugins                  ] [Genis-Vell] loaded [], sites []
+[2016-06-27 14:39:51,523][INFO ][node                     ] [Genis-Vell] initialized
+[2016-06-27 14:39:51,525][INFO ][node                     ] [Genis-Vell] starting ...
+[2016-06-27 14:39:51,605][INFO ][transport                ] [Genis-Vell] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, publish_address {inet[/10.116.54.245:9300]}
+[2016-06-27 14:39:54,632][INFO ][cluster.service          ] [Genis-Vell] new_master [Genis-Vell][uCZvQU6hRDO-IQKPgwdOIg][Chips15incher.local][inet[/10.116.54.245:9300]], reason: zen-disco-join (elected_as_master)
+[2016-06-27 14:39:54,688][INFO ][discovery                ] [Genis-Vell] elasticsearch/uCZvQU6hRDO-IQKPgwdOIg
+[2016-06-27 14:39:54,702][INFO ][http                     ] [Genis-Vell] bound_address {inet[/0:0:0:0:0:0:0:0:9200]}, publish_address {inet[/10.116.54.245:9200]}
+[2016-06-27 14:39:54,970][INFO ][gateway                  ] [Genis-Vell] recovered [1] indices into cluster_state
+[2016-06-27 14:39:54,971][INFO ][node                     ] [Genis-Vell] started

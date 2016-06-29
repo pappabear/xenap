@@ -1,9 +1,7 @@
 desc 'Enrich the catalog data'
 task :enrich_catalog_data => :environment do
-  puts '+----------------------------------------------------------------------'
-  puts '| Beginning to enrich the catalog data in the database in  T H R E E  steps...'
-  puts '| '
-  puts '| Step 1: Removing the hardcoded string NULL...'
+  puts '    Beginning to enrich the catalog data in the database in  T H R E E  steps...'
+  puts '    Step 1: Removing the hardcoded string NULL...'
   Stamp.all.each do |stamp|
     stamp.country_name = stamp.country_name == "NULL" ? nil : stamp.country_name
     stamp.sub_country_name = stamp.sub_country_name == "NULL" ? nil : stamp.sub_country_name
@@ -35,8 +33,7 @@ task :enrich_catalog_data => :environment do
   end
 
 
-  puts '| '
-  puts '| Step 2: Determining the image url for the set and stamp...'
+  puts '    Step 2: Determining the image url for the set and stamp...'
   s=""
   n=0
   i=0
@@ -106,18 +103,15 @@ task :enrich_catalog_data => :environment do
   end
 
 
-  puts '| '
-  puts '| Step 3: Replacing the string [gap] with a blank...'
+  puts '    Step 3: Replacing the string [gap] with a blank...'
   Stamp.all.each do |stamp|
     stamp.set_text = stamp.set_text.gsub('[gap]', ' ') unless stamp.set_text.nil?
     stamp.save!
   end
 
 
-  puts '| '
-  puts '| Catalog data enrichment job complete.'
-  puts '+----------------------------------------------------------------------'
-  puts n.to_s + ' stamps examined. ' + i.to_s + ' stamps enriched.'
+  puts '    Catalog data enrichment job complete.'
+  puts ('    ' + n.to_s + ' stamps examined. ' + i.to_s + ' stamps enriched.').colorize(:yellow)
 
 
 end

@@ -1,9 +1,9 @@
 require 'csv'
 
-puts 'Purging any old stamp data...'
+puts '    Purging any old stamp data...'
 Stamp.destroy_all
 
-puts 'Importing France stamp data into MySQL...'
+puts '    Importing France stamp data into MySQL...'
 
 CSV.foreach("db/stamps.france.csv", headers: true) do |row|
   h = row.to_hash
@@ -36,7 +36,7 @@ CSV.foreach("db/stamps.france.csv", headers: true) do |row|
 end
 
 
-puts 'Importing GB stamp data into MySQL...'
+puts '    Importing GB stamp data into MySQL...'
 
 CSV.foreach("db/stamps.gb.csv", headers: true) do |row|
   h = row.to_hash
@@ -72,5 +72,5 @@ end
 
 
 
-puts '...stamp records created.'
+puts '    Stamp records created!'.colorize(:green).bold
 

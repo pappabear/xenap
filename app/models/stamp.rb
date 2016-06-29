@@ -2,7 +2,7 @@ class Stamp < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  Stamp.__elasticsearch__.client = Elasticsearch::Client.new host: '192.168.99.100', log: true
+  #Stamp.__elasticsearch__.client = Elasticsearch::Client.new #host: '192.168.99.100', log: true
 
   def self.search(query)
     __elasticsearch__.search(
