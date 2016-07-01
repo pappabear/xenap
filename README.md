@@ -23,6 +23,7 @@ Best case scenario: we have a working asset that needs to be productized.
 
 ## Prototype Context
 
+![Context](/public/xenap.png?raw=true "Xena in action")
 
 
 ## Getting Started

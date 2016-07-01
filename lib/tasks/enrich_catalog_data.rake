@@ -110,8 +110,8 @@ task :enrich_catalog_data => :environment do
   end
 
 
-  puts '    Catalog data enrichment job complete.'
-  puts ('    ' + n.to_s + ' stamps examined. ' + i.to_s + ' stamps enriched.').colorize(:yellow)
+  puts '    Catalog data enrichment job complete.'.colorize(:white).bold
+  puts ('    ' + n.to_s + ' stamps examined. ' + i.to_s + ' stamps enriched.').colorize(:green)
 
 
 end
