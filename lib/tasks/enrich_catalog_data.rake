@@ -1,7 +1,6 @@
 desc 'Enrich the catalog data'
 task :enrich_catalog_data => :environment do
-  puts '    Beginning to enrich the catalog data in the database in  T H R E E  steps...'
-  puts '    Step 1: Removing the hardcoded string NULL...'
+  print '    Removing the hardcoded string NULL...'
   Stamp.all.each do |stamp|
     stamp.country_name = stamp.country_name == "NULL" ? nil : stamp.country_name
     stamp.sub_country_name = stamp.sub_country_name == "NULL" ? nil : stamp.sub_country_name
@@ -31,9 +30,10 @@ task :enrich_catalog_data => :environment do
     stamp.variety_flag = stamp.variety_flag == "NULL" ? nil : stamp.variety_flag
     stamp.save!
   end
+  puts 'Done.'
 
 
-  puts '    Step 2: Determining the image url for the set and stamp...'
+  print '    Determining the image url for the set and stamp...'
   s=""
   n=0
   i=0
@@ -41,9 +41,6 @@ task :enrich_catalog_data => :environment do
   url_determined = false
 
   Stamp.all.each do |stamp|
-
-    #puts '-----'
-    #puts stamp.country_name + ' SG' + stamp.sg_number + ' ' + (stamp.set_description == nil ? 'null' : stamp.set_description)
 
     # if all fields are null its all fubar
     if stamp.stamp_type_number.nil? && stamp.set_description.nil? && s == ""
@@ -101,13 +98,44 @@ task :enrich_catalog_data => :environment do
     n += 1
     url_determined = false
   end
+  puts 'Done.'
 
 
-  puts '    Step 3: Replacing the string [gap] with a blank...'
+  print '    Replacing the string [gap] with a blank...'
   Stamp.all.each do |stamp|
     stamp.set_text = stamp.set_text.gsub('[gap]', ' ') unless stamp.set_text.nil?
     stamp.save!
   end
+  puts 'Done.'
+
+
+  print '    Filling out issue dates (since the input is chronological, not deterministic)...'
+  previous_stamp = Stamp.first
+  Stamp.all.each do |stamp|
+    stamp.set_start_year = previous_stamp.set_start_year if stamp.set_start_year.nil?
+    stamp.set_start_month = previous_stamp.set_start_month if stamp.set_start_month.nil?
+    stamp.set_start_day = previous_stamp.set_start_day if stamp.set_start_day.nil?
+    stamp.set_end_year = previous_stamp.set_end_year if stamp.set_end_year.nil?
+    stamp.set_end_month = previous_stamp.set_end_month if stamp.set_end_month.nil?
+    stamp.set_end_day = previous_stamp.set_end_day if stamp.set_end_day.nil?
+    stamp.save!
+    previous_stamp = stamp
+  end
+  puts 'Done.'
+
+
+  print '    Computing the description for each stamp...'
+  Stamp.all.each do |stamp|
+    stamp.computed_description = ''
+    stamp.computed_description += stamp.set_start_year + ' ' unless stamp.set_start_year.nil?
+    stamp.computed_description += stamp.stamp_issue_price + ' ' unless stamp.stamp_issue_price.nil?
+    stamp.computed_description += stamp.stamp_description + ' ' unless stamp.stamp_description.nil?
+    stamp.computed_description += stamp.variety_description + ' ' unless stamp.variety_description.nil?
+    stamp.computed_description += stamp.variety_flag unless stamp.variety_flag.nil?
+    stamp.save!
+  end
+  puts 'Done.'
+  puts
 
 
   puts '    Catalog data enrichment job complete.'.colorize(:white).bold
