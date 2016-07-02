@@ -1,9 +1,7 @@
-<div class="container">
-  <h3 class="title">Stamps</h3>
 
-  <%= link_to "Add a new stamp to the catalog", new_stamp_path, class: "btn btn-default pull-right" %>
-
-
+  <h3 class="title">My Catalogs</h3>
+  <%= link_to "France", "/stamps?catalog=france", class: "btn btn-large btn-primary" %>
+  <%= link_to "GB Concise", "/stamps?catalog=Great Britain", class: "btn btn-large btn-primary" %>
   <hr>
 
   <%= form_tag search_stamps_path, method: 'get' do %>
@@ -11,26 +9,28 @@
         <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search...' %>
 
         <span class="input-group-btn">
-    <button type="button" class="btn btn-default">
-      <span class="glyphicon glyphicon-search"></span>
-    </button>
-  </span>
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
       </div>
 
   <% end %>
 
   <hr>
 
-    <%= @stamps.count.to_s + " stamps found. ".html_safe if params[:q] %>
+  <% if @stamps.count > 0 %>
 
   <div class="table-responsive">
     <table class="table table-hover">
       <thead>
       <tr>
         <th>Country</th>
-        <th>stamp_issue_price</th>
         <th>SG Number</th>
-        <th>Navigate</th>
+        <th>Representative Image</th>
+        <th>Catalog Price Used (GBP)</th>
+        <th>Catalog Price Unused (GBP)</th>
+        <th>Admin</th>
       </tr>
       </thead>
 
@@ -38,9 +38,11 @@
 
       <% @stamps.__send__ controller.action_name == 'search' ? :each_with_hit : :each do |stamp, hit| %>
           <tr>
-            <td><%= hit.try(:highlight).try(:country_name)   ? hit.highlight.country_name.join.html_safe : stamp.country_name %></td>
-            <td><%= hit.try(:highlight).try(:stamp_issue_price)   ? hit.highlight.stamp_issue_price.join.html_safe : stamp.stamp_issue_price %></td>
+            <td><%= hit.try(:highlight).try(:country_name) ? hit.highlight.country_name.join.html_safe : stamp.country_name %></td>
             <td><%= link_to stamp.sg_number, set_path(stamp) %></td>
+            <td><%= image_tag(stamp.image_url, alt: stamp.image_url) %></td>
+            <td><%= stamp.stamp_used %></td>
+            <td><%= stamp.stamp_unused %></td>
             <td>
               <%= link_to 'Edit', edit_stamp_path(stamp), class: 'btn btn-success' %>
             </td>
@@ -54,13 +56,13 @@
       <%= paginate @stamps %>
     </div>
 
+    <% end %>
+
     <hr>
 
     <p style="text-align: center; margin-bottom: 21px">
-      <%= link_to 'New Stamp', new_stamp_path, class: 'btn btn-primary btn-xs', style: 'color: #fff' %>
-      <%= link_to 'All Articles', stamps_path, class: 'btn btn-primary btn-xs', style: 'color: #fff' if params[:q] %>
+      <%= link_to 'New Stamp', new_stamp_path, class: 'btn btn-primary', style: 'color: #fff' %>
     </p>
 
   </div>
 
-</div>

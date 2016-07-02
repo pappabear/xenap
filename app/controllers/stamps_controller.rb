@@ -59,7 +59,12 @@ class StampsController < ApplicationController
 
 
   def index
-    @stamps = Stamp.page(params[:page])
+    if params[:catalog]
+      @stamps = Stamp.where('country_name=?', params[:catalog]).page(params[:page])
+    else
+      @stamps = Stamp.where('country_name=?','XYZ').page(params[:page])
+    end
+
   end
 
 
