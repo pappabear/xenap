@@ -33,13 +33,17 @@ This setup assume you have MySQL running locally.
 * Clone the repo.
 * Run ```bundle install```
 * Run ```rake db:create && db:migrate```
+* Go into the "vendor/image-fixer" folder
+* Run ```./get.sh``` to download the TIFFs using curl
+* Run ```./convert.sh``` to convert them to JPGs ( make sure you install imagemagick with $brew install imagemagick --with-libtiff)
+* Run ```./move.sh``` to copy the usable images into app folder(s) in xena for ephemeral storage
 
 
 ## Running the app
 
 Run ```ruby runme.rb```
 
-Point Safari at http://localhost:3000. You MUST run this in Safari today, since the prototype is dealing with TIFs.
+Point a browser at http://localhost:3000. 
 
 
 ## Contributing

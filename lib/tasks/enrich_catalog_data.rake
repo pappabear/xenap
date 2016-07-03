@@ -1,5 +1,7 @@
 desc 'Enrich the catalog data'
 task :enrich_catalog_data => :environment do
+
+  # ---------------------------------------------------------------------------------------------------------
   print '    Removing the hardcoded string NULL...'
   Stamp.all.each do |stamp|
     stamp.country_name = stamp.country_name == "NULL" ? nil : stamp.country_name
@@ -33,31 +35,37 @@ task :enrich_catalog_data => :environment do
   puts 'Done.'
 
 
-  print '    Determining the image url for the set and stamp...'
-  s=""
+  # ---------------------------------------------------------------------------------------------------------
+  print '    Determining the image urls for the FRANCE catalog stamps...'
+  s3=""
+  sl=""
   n=0
   i=0
   previous_stamp = Stamp.new
   url_determined = false
 
-  Stamp.all.each do |stamp|
+  Stamp.where('country_name=?', 'France').each do |stamp|
 
     # if all fields are null its all fubar
-    if stamp.stamp_type_number.nil? && stamp.set_description.nil? && s == ""
+    if stamp.stamp_type_number.nil? && stamp.set_description.nil? && s3 == ""
       stamp.image_url = "ERROR in calculating image"
+      stamp.local_image_url = "ERROR in calculating image"
       url_determined = true
     end
 
     # start by assuming this stamp has the same image as the previous one
     # most stamps do NOT start a new set
-    stamp.image_url = s
+    stamp.image_url = s3
+    stamp.local_image_url = sl
 
     # now look for exceptions
 
     # if the stamp-type-number field is populated take that as the TIF file name
     if !url_determined && !stamp.stamp_type_number.nil?
-      stamp.image_url = stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.stamp_type_number + ".TIF"
-      s = stamp.image_url
+      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.stamp_type_number + ".TIF"
+      stamp.local_image_url = '/images/France/' + stamp.stamp_type_number + '.jpg'
+      s3 = stamp.image_url
+      sl = stamp.local_image_url
       i += 1
       url_determined = true
     end
@@ -80,6 +88,7 @@ task :enrich_catalog_data => :environment do
         stamp.set_type_number == previous_stamp.set_type_number &&
         stamp.set_watermark_number == previous_stamp.set_watermark_number)
       stamp.image_url = previous_stamp.image_url
+      stamp.local_image_url = previous_stamp.local_image_url
       i += 1
       url_determined = true
     end
@@ -88,7 +97,9 @@ task :enrich_catalog_data => :environment do
     if !url_determined && !stamp.set_description.nil? && stamp.set_description[0, 2] == "T "
       # looks like 'T 1. Yellow gum.', where the 1 is the TIFF file name
       stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.set_description[2, 1] + ".TIF"
-      s = stamp.image_url
+      stamp.local_image_url = "/images/France/" + stamp.set_description[2, 1] + ".jpg"
+      s3 = stamp.image_url
+      sl = stamp.local_image_url
       i += 1
       url_determined = true
     end
@@ -101,6 +112,24 @@ task :enrich_catalog_data => :environment do
   puts 'Done.'
 
 
+  # ---------------------------------------------------------------------------------------------------------
+  print '    Determining the image urls for the GREAT BRITAIN catalog stamps...'
+  s3=""
+  sl=""
+  n=0
+  i=0
+  previous_stamp = Stamp.new
+  url_determined = false
+
+  Stamp.where('country_name=?', 'GREAT BRITAIN').each do |stamp|
+    stamp.image_url = "tbd"
+    stamp.local_image_url = "tbd"
+    stamp.save!
+  end
+  puts 'Done.'
+
+
+  # ---------------------------------------------------------------------------------------------------------
   print '    Replacing the string [gap] with a blank...'
   Stamp.all.each do |stamp|
     stamp.set_text = stamp.set_text.gsub('[gap]', ' ') unless stamp.set_text.nil?
@@ -109,6 +138,7 @@ task :enrich_catalog_data => :environment do
   puts 'Done.'
 
 
+  # ---------------------------------------------------------------------------------------------------------
   print '    Filling out issue dates (since the input is chronological, not deterministic)...'
   previous_stamp = Stamp.first
   Stamp.all.each do |stamp|
@@ -124,6 +154,7 @@ task :enrich_catalog_data => :environment do
   puts 'Done.'
 
 
+  # ---------------------------------------------------------------------------------------------------------
   print '    Computing the description for each stamp...'
   Stamp.all.each do |stamp|
     stamp.computed_description = ''
@@ -135,11 +166,6 @@ task :enrich_catalog_data => :environment do
     stamp.save!
   end
   puts 'Done.'
-  puts
-
-
-  puts '    Catalog data enrichment job complete.'.colorize(:white).bold
-  puts ('    ' + n.to_s + ' stamps examined. ' + i.to_s + ' stamps enriched.').colorize(:green)
-
+  puts '    Ok, catalog data enrichment job complete.'.colorize(:green).bold
 
 end

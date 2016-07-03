@@ -42,7 +42,7 @@
             <td><%= hit.try(:highlight).try(:country_name) ? hit.highlight.country_name.join.html_safe : stamp.country_name %></td>
             <td><%= link_to stamp.sg_number, set_path(stamp) %></td>
             <td><%= stamp.computed_description %></td>
-            <td><%= image_tag(stamp.image_url, alt: stamp.image_url) %></td>
+            <td class="text-center"><%= image_tag(stamp.local_image_url, alt: stamp.image_url, height: 64) %></td>
             <td><%= stamp.stamp_used %></td>
             <td><%= stamp.stamp_unused %></td>
             <td>

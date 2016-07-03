@@ -61,13 +61,9 @@ puts ('-'*80).colorize(:white).bold
 puts '    Trying http://localhost:9200/stamps/_search...'
 begin
   results = Net::HTTP.get(URI.parse('http://localhost:9200/stamps/_search'))
-  #puts "results=" + results
   obj = JSON.parse(results)
-  #puts ('obj=' + obj.to_s).colorize(:blue)
   hits = obj['hits']
-  #puts ('hits=' + hits.to_s).colorize(:yellow)
   total = hits['total'].to_s
-  #puts ('total=' + total).colorize(:red)
   if total.to_i > 0
     puts "    Ok, index was created as expected.".colorize(:green)
   else
