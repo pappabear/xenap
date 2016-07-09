@@ -68,7 +68,6 @@ class StampsController < ApplicationController
   end
 
 
-  # GET /articles/search
   def search
     @stamps = Stamp.search(params[:q]).page(params[:page]).records
     render action: "index"
