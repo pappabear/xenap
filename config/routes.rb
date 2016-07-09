@@ -8,4 +8,11 @@ Rails.application.routes.draw do
 
   root 'stamps#index'
 
+  #api
+  namespace :api do
+    namespace :v1 do
+      resources :stamps, only: [:index, :show]
+    end
+  end
+
 end

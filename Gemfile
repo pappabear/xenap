@@ -26,6 +26,10 @@ gem 'faker'
 gem 'puma'
 gem 'colorize'
 
+gem 'active_model_serializers', '0.9.2'
+gem 'kaminari', '~> 0.16.1'
+gem 'httparty'
+
 group :development, :test do
   gem 'byebug',      '3.4.0'
   gem 'web-console', '2.0.0.beta3'
