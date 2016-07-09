@@ -45,6 +45,8 @@ Run ```ruby runme.rb```
 
 Point a browser at http://localhost:3000. 
 
+To explore the API, point Postman at http://localhost:3000/api/v1/stamps. 
+
 
 ## Contributing
 

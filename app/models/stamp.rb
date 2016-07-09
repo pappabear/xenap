@@ -10,7 +10,7 @@ class Stamp < ActiveRecord::Base
             query: {
                 multi_match: {
                     query: query,
-                    fields: ['stamp_issue_price^10', 'country_name']
+                    fields: ['computed_description^10', 'country_name', 'sg_number^5']
                 }
             },
             highlight: {
