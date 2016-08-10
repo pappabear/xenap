@@ -7,16 +7,11 @@ class StampsController < ApplicationController
 
   def index
     @count=0
-    if params[:country_name]
-      if params[:sub_country_name]
-        @stamps = Stamp.where('country_name=? and sub_country_name=?', params[:country_name], params[:sub_country_name]).page(params[:page]).order('id')
-        @count = Stamp.where('country_name=? and sub_country_name=?', params[:country_name], params[:sub_country_name]).count
-      else
-        @stamps = Stamp.where('country_name=? and sub_country_name is null', params[:country_name]).page(params[:page]).order('id')
-        @count = Stamp.where('country_name=? and sub_country_name is null', params[:country_name]).count
-      end
+    if params[:issuer]
+        @stamps = Stamp.where('issuer=?', params[:issuer]).order('id').page(params[:page])
+        @count = Stamp.where('issuer=?', params[:issuer]).count
     else
-      @stamps = Stamp.where('country_name=?','XYZ').page(params[:page])
+      @stamps = Stamp.where('issuer=?','XYZ').page(params[:page])
     end
 
   end
