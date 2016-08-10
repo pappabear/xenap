@@ -1,4 +1,5 @@
 class Stamp < ActiveRecord::Base
+=begin
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -25,6 +26,10 @@ class Stamp < ActiveRecord::Base
     )
   end
 
+
 end
 
 Stamp.import force:true # for auto sync model with elastic search
+=end
+
+end

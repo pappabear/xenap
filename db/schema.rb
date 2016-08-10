@@ -11,40 +11,81 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160703142628) do
+ActiveRecord::Schema.define(version: 20160808112726) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "stamps", force: :cascade do |t|
-    t.string   "country_name",         limit: 255
-    t.string   "sub_country_name",     limit: 255
-    t.string   "set_description",      limit: 255
-    t.text     "set_text",             limit: 65535
-    t.string   "set_designer",         limit: 255
-    t.string   "set_start_year",       limit: 255
-    t.string   "set_start_month",      limit: 255
-    t.string   "set_start_day",        limit: 255
-    t.string   "set_end_year",         limit: 255
-    t.string   "set_end_month",        limit: 255
-    t.string   "set_end_day",          limit: 255
-    t.string   "set_perf_info",        limit: 255
-    t.string   "set_type_number",      limit: 255
-    t.string   "set_watermark_number", limit: 255
-    t.string   "sg_number",            limit: 255
-    t.string   "stamp_prefix",         limit: 255
-    t.string   "stamp_sg_number",      limit: 255
-    t.string   "stamp_pre_suffix",     limit: 255
-    t.string   "stamp_suffix",         limit: 255
-    t.string   "stamp_description",    limit: 255
-    t.string   "variety_description",  limit: 255
-    t.string   "stamp_issue_price",    limit: 255
-    t.string   "stamp_type_number",    limit: 255
-    t.string   "stamp_unused",         limit: 255
-    t.string   "stamp_used",           limit: 255
-    t.string   "variety_flag",         limit: 255
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "image_url",            limit: 255
-    t.string   "computed_description", limit: 255
-    t.string   "local_image_url",      limit: 255
+    t.string   "country_name"
+    t.string   "sub_country_name"
+    t.string   "set_description"
+    t.text     "set_text"
+    t.string   "set_designer"
+    t.string   "set_start_year"
+    t.string   "set_start_month"
+    t.string   "set_start_day"
+    t.string   "set_end_year"
+    t.string   "set_end_month"
+    t.string   "set_end_day"
+    t.string   "set_perf_info"
+    t.string   "set_type_number"
+    t.string   "set_watermark_number"
+    t.string   "sg_number"
+    t.string   "stamp_prefix"
+    t.string   "stamp_sg_number"
+    t.string   "stamp_pre_suffix"
+    t.string   "stamp_suffix"
+    t.string   "stamp_description"
+    t.string   "variety_description"
+    t.string   "stamp_issue_price"
+    t.string   "stamp_type_number"
+    t.string   "stamp_unused"
+    t.string   "stamp_used"
+    t.string   "variety_flag"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "image_url"
+    t.string   "computed_description"
+    t.string   "local_image_url"
+    t.string   "scott_number"
+    t.string   "stamp_hash"
+  end
+
+  create_table "stamps_raw", force: :cascade do |t|
+    t.string   "country_name"
+    t.string   "sub_country_name"
+    t.string   "set_description"
+    t.text     "set_text"
+    t.string   "set_designer"
+    t.string   "set_start_year"
+    t.string   "set_start_month"
+    t.string   "set_start_day"
+    t.string   "set_end_year"
+    t.string   "set_end_month"
+    t.string   "set_end_day"
+    t.string   "set_perf_info"
+    t.string   "set_type_number"
+    t.string   "set_watermark_number"
+    t.string   "sg_number"
+    t.string   "stamp_prefix"
+    t.string   "stamp_sg_number"
+    t.string   "stamp_pre_suffix"
+    t.string   "stamp_suffix"
+    t.string   "stamp_description"
+    t.string   "variety_description"
+    t.string   "stamp_issue_price"
+    t.string   "stamp_type_number"
+    t.string   "stamp_unused"
+    t.string   "stamp_used"
+    t.string   "variety_flag"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "image_url"
+    t.string   "computed_description"
+    t.string   "local_image_url"
+    t.string   "scott_number"
+    t.string   "stamp_hash"
   end
 
 end

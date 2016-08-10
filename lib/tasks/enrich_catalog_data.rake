@@ -1,38 +1,40 @@
 desc 'Enrich the catalog data'
 task :enrich_catalog_data => :environment do
 
-  # ---------------------------------------------------------------------------------------------------------
-  print '    Removing the hardcoded string NULL...'
-  Stamp.all.each do |stamp|
-    stamp.country_name = stamp.country_name == "NULL" ? nil : stamp.country_name
-    stamp.sub_country_name = stamp.sub_country_name == "NULL" ? nil : stamp.sub_country_name
-    stamp.set_description = stamp.set_description == "NULL" ? nil : stamp.set_description
-    stamp.set_text = stamp.set_text == "NULL" ? nil : stamp.set_text
-    stamp.set_designer = stamp.set_designer == "NULL" ? nil : stamp.set_designer
-    stamp.set_start_year = stamp.set_start_year == "NULL" ? nil : stamp.set_start_year
-    stamp.set_start_month = stamp.set_start_month == "NULL" ? nil : stamp.set_start_month
-    stamp.set_start_day = stamp.set_start_day == "NULL" ? nil : stamp.set_start_day
-    stamp.set_end_year = stamp.set_end_year == "NULL" ? nil : stamp.set_end_year
-    stamp.set_end_month = stamp.set_end_month == "NULL" ? nil : stamp.set_end_month
-    stamp.set_end_day = stamp.set_end_day == "NULL" ? nil : stamp.set_end_day
-    stamp.set_perf_info = stamp.set_perf_info == "NULL" ? nil : stamp.set_perf_info
-    stamp.set_type_number = stamp.set_type_number == "NULL" ? nil : stamp.set_type_number
-    stamp.set_watermark_number = stamp.set_watermark_number == "NULL" ? nil : stamp.set_watermark_number
-    stamp.sg_number = stamp.sg_number == "NULL" ? nil : stamp.sg_number
-    stamp.stamp_prefix = stamp.stamp_prefix == "NULL" ? nil : stamp.stamp_prefix
-    stamp.stamp_sg_number = stamp.stamp_sg_number == "NULL" ? nil : stamp.stamp_sg_number
-    stamp.stamp_pre_suffix = stamp.stamp_pre_suffix == "NULL" ? nil : stamp.stamp_pre_suffix
-    stamp.stamp_suffix = stamp.stamp_suffix == "NULL" ? nil : stamp.stamp_suffix
-    stamp.stamp_description = stamp.stamp_description == "NULL" ? nil : stamp.stamp_description
-    stamp.variety_description = stamp.variety_description == "NULL" ? nil : stamp.variety_description
-    stamp.stamp_issue_price = stamp.stamp_issue_price == "NULL" ? nil : stamp.stamp_issue_price
-    stamp.stamp_type_number = stamp.stamp_type_number == "NULL" ? nil : stamp.stamp_type_number
-    stamp.stamp_unused = stamp.stamp_unused == "NULL" ? nil : stamp.stamp_unused
-    stamp.stamp_used = stamp.stamp_used == "NULL" ? nil : stamp.stamp_used
-    stamp.variety_flag = stamp.variety_flag == "NULL" ? nil : stamp.variety_flag
-    stamp.save!
-  end
-  puts 'Done.'
+  # # ---------------------------------------------------------------------------------------------------------
+  # print '    Removing the hardcoded string NULL...'
+  # Stamp.all.each do |stamp|
+  #   stamp.country_name = stamp.country_name == "NULL" ? nil : stamp.country_name
+  #   stamp.sub_country_name = stamp.sub_country_name == "NULL" ? nil : stamp.sub_country_name
+  #   stamp.set_description = stamp.set_description == "NULL" ? nil : stamp.set_description
+  #   stamp.set_text = stamp.set_text == "NULL" ? nil : stamp.set_text
+  #   stamp.set_designer = stamp.set_designer == "NULL" ? nil : stamp.set_designer
+  #   stamp.set_start_year = stamp.set_start_year == "NULL" ? nil : stamp.set_start_year
+  #   stamp.set_start_month = stamp.set_start_month == "NULL" ? nil : stamp.set_start_month
+  #   stamp.set_start_day = stamp.set_start_day == "NULL" ? nil : stamp.set_start_day
+  #   stamp.set_end_year = stamp.set_end_year == "NULL" ? nil : stamp.set_end_year
+  #   stamp.set_end_month = stamp.set_end_month == "NULL" ? nil : stamp.set_end_month
+  #   stamp.set_end_day = stamp.set_end_day == "NULL" ? nil : stamp.set_end_day
+  #   stamp.set_perf_info = stamp.set_perf_info == "NULL" ? nil : stamp.set_perf_info
+  #   stamp.set_type_number = stamp.set_type_number == "NULL" ? nil : stamp.set_type_number
+  #   stamp.set_watermark_number = stamp.set_watermark_number == "NULL" ? nil : stamp.set_watermark_number
+  #   stamp.sg_number = stamp.sg_number == "NULL" ? nil : stamp.sg_number
+  #   stamp.stamp_prefix = stamp.stamp_prefix == "NULL" ? nil : stamp.stamp_prefix
+  #   stamp.stamp_sg_number = stamp.stamp_sg_number == "NULL" ? nil : stamp.stamp_sg_number
+  #   stamp.stamp_pre_suffix = stamp.stamp_pre_suffix == "NULL" ? nil : stamp.stamp_pre_suffix
+  #   stamp.stamp_suffix = stamp.stamp_suffix == "NULL" ? nil : stamp.stamp_suffix
+  #   stamp.stamp_description = stamp.stamp_description == "NULL" ? nil : stamp.stamp_description
+  #   stamp.variety_description = stamp.variety_description == "NULL" ? nil : stamp.variety_description
+  #   stamp.stamp_issue_price = stamp.stamp_issue_price == "NULL" ? nil : stamp.stamp_issue_price
+  #   stamp.stamp_type_number = stamp.stamp_type_number == "NULL" ? nil : stamp.stamp_type_number
+  #   stamp.stamp_unused = stamp.stamp_unused == "NULL" ? nil : stamp.stamp_unused
+  #   stamp.stamp_used = stamp.stamp_used == "NULL" ? nil : stamp.stamp_used
+  #   stamp.variety_flag = stamp.variety_flag == "NULL" ? nil : stamp.variety_flag
+  #   stamp.stamp_hash = stamp.stamp_hash == "NULL" ? nil : stamp.stamp_hash
+  #   stamp.scott_number = stamp.scott_number == "NULL" ? nil : stamp.scott_number
+  #   stamp.save!
+  # end
+  # puts 'Done.'
 
 
   # ---------------------------------------------------------------------------------------------------------
@@ -111,22 +113,6 @@ task :enrich_catalog_data => :environment do
   end
   puts 'Done.'
 
-
-  # ---------------------------------------------------------------------------------------------------------
-  print '    Determining the image urls for the GREAT BRITAIN catalog stamps...'
-  s3=""
-  sl=""
-  n=0
-  i=0
-  previous_stamp = Stamp.new
-  url_determined = false
-
-  Stamp.where('country_name=?', 'GREAT BRITAIN').each do |stamp|
-    stamp.image_url = "tbd"
-    stamp.local_image_url = "tbd"
-    stamp.save!
-  end
-  puts 'Done.'
 
 
   # ---------------------------------------------------------------------------------------------------------
