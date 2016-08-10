@@ -1,11 +1,14 @@
 require 'csv'
 
-puts '    Purging any old stamp data...'
-StampRaw.destroy_all
+print '    Purging any old stamp data...'
+#StampRaw.destroy_all
 Stamp.destroy_all
+puts 'done.'
 
-puts '    Importing raw stamp data into staging table...'
 
+print '    Importing raw stamp data into staging table...'
+
+=begin
 #CSV.foreach("db/stamps.gb.csv", headers: true) do |row|
 CSV.foreach("raw_data/xena_stamps.csv", headers: true) do |row|
   h = row.to_hash
@@ -41,12 +44,12 @@ CSV.foreach("raw_data/xena_stamps.csv", headers: true) do |row|
                 :stamp_used => h['stamp_used'],
                 :variety_flag => h['variety_flag'])
 end
+=end
+puts 'done.'
 
 
-puts '    Organizing stamp data by issuing entity...'
-
-
-StampRaw.order('country_name').order('id').each do |raw|
+print '    Organizing stamp data by country...'
+StampRaw.order('country_name').where("country_name='France'").order('id').each do |raw|
   Stamp.create!(   # issuing entity
                    :country_name => raw.country_name,
                    :sub_country_name => raw.sub_country_name,
@@ -80,5 +83,5 @@ StampRaw.order('country_name').order('id').each do |raw|
 end
 
 
-puts '    Stamp records created!'.colorize(:green).bold
+puts '    done. Stamp records created!'.colorize(:green).bold
 

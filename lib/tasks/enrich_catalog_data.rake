@@ -1,6 +1,18 @@
 desc 'Enrich the catalog data'
 task :enrich_catalog_data => :environment do
 
+  # ---------------------------------------------------------------------------------------------------------
+  print '    Computing the issuer for each stamp...'
+  Stamp.all.each do |stamp|
+    if !stamp.sub_country_name.nil?
+      stamp.issuer = stamp.country_name + " > " + stamp.sub_country_name
+    else
+      stamp.issuer = stamp.country_name
+    end
+    stamp.save!
+  end
+  puts 'Done.'
+
   # # ---------------------------------------------------------------------------------------------------------
   # print '    Removing the hardcoded string NULL...'
   # Stamp.all.each do |stamp|
@@ -46,7 +58,7 @@ task :enrich_catalog_data => :environment do
   previous_stamp = Stamp.new
   url_determined = false
 
-  Stamp.where('country_name=?', 'France').each do |stamp|
+  Stamp.where('country_name=?', 'France').order('id').each do |stamp|
 
     # if all fields are null its all fubar
     if stamp.stamp_type_number.nil? && stamp.set_description.nil? && s3 == ""
@@ -64,8 +76,14 @@ task :enrich_catalog_data => :environment do
 
     # if the stamp-type-number field is populated take that as the TIF file name
     if !url_determined && !stamp.stamp_type_number.nil?
-      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.stamp_type_number + ".TIF"
-      stamp.local_image_url = '/images/France/' + stamp.stamp_type_number + '.jpg'
+      node=""
+      if !stamp.sub_country_name.nil?
+        node = stamp.sub_country_name
+      else
+        node = stamp.country_name
+      end
+      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + node + "/Resized/" + stamp.stamp_type_number + ".tif"
+      stamp.local_image_url = "/images/" + node + "/" + stamp.stamp_type_number + '.jpg'
       s3 = stamp.image_url
       sl = stamp.local_image_url
       i += 1
@@ -98,8 +116,14 @@ task :enrich_catalog_data => :environment do
     # look in the set description for the TIFF file name
     if !url_determined && !stamp.set_description.nil? && stamp.set_description[0, 2] == "T "
       # looks like 'T 1. Yellow gum.', where the 1 is the TIFF file name
-      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.set_description[2, 1] + ".TIF"
-      stamp.local_image_url = "/images/France/" + stamp.set_description[2, 1] + ".jpg"
+      node=""
+      if !stamp.sub_country_name.nil?
+        node = stamp.sub_country_name
+      else
+        node = stamp.country_name
+      end
+      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.set_description[2, 1] + ".tif"
+      stamp.local_image_url = "/images/" + node + "/" + stamp.set_description[2, 1] + ".jpg"
       s3 = stamp.image_url
       sl = stamp.local_image_url
       i += 1
@@ -127,7 +151,7 @@ task :enrich_catalog_data => :environment do
   # ---------------------------------------------------------------------------------------------------------
   print '    Filling out issue dates (since the input is chronological, not deterministic)...'
   previous_stamp = Stamp.first
-  Stamp.all.each do |stamp|
+  Stamp.all.order('id').each do |stamp|
     stamp.set_start_year = previous_stamp.set_start_year if stamp.set_start_year.nil?
     stamp.set_start_month = previous_stamp.set_start_month if stamp.set_start_month.nil?
     stamp.set_start_day = previous_stamp.set_start_day if stamp.set_start_day.nil?
