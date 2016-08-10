@@ -28,8 +28,6 @@ Best case scenario: we have a working asset that needs to be productized.
 
 ## Getting Started
 
-This setup assume you have MySQL running locally.
-
 * Clone the repo.
 * Run ```bundle install```
 * Run ```rake db:create && db:migrate```

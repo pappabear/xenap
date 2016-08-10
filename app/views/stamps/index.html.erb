@@ -1,7 +1,8 @@
 
   <h3 class="title">My Catalogs</h3>
-  <%= link_to "France", "/stamps?catalog=france", class: "btn btn-large btn-primary" %>
-  <%= link_to "GB Concise", "/stamps?catalog=Great Britain", class: "btn btn-large btn-primary" %>
+  <%= link_to "France", "/stamps?country_name=France", class: "btn btn-large btn-primary" %>
+  <%= link_to "France > Alexandretta", "/stamps?country_name=France&sub_country_name=Alexandretta", class: "btn btn-large btn-primary" %>
+  <%= link_to "GB Concise", "/stamps?country_name=Great Britain", class: "btn btn-large btn-primary" %>
   <hr>
 
   <%= form_tag search_stamps_path, method: 'get' do %>
@@ -18,6 +19,8 @@
   <% end %>
 
   <hr>
+
+  <h3><%= @count %> stamps found.</h3>
 
   <% if @stamps.count > 0 %>
 
@@ -55,6 +58,7 @@
     </table>
 
     <div class="text-center">
+      <h3><%= @stamps.count %> stamps found.</h3>
       <%= paginate @stamps %>
     </div>
 

@@ -85,7 +85,7 @@ puts
 
 puts 'Launch the app server'.colorize(:white).bold
 puts ('-'*80).colorize(:white).bold
-system("rails s")
+system("rails s -b 0.0.0.0 -p 3000")
 puts
 puts
 

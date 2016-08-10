@@ -1,7 +1,31 @@
 class StampsController < ApplicationController
   include StampsHelper
 
+
   before_action :set_stamp, only: [:show, :edit, :update, :destroy]
+
+
+  def index
+    @count=0
+    if params[:country_name]
+      if params[:sub_country_name]
+        @stamps = Stamp.where('country_name=? and sub_country_name=?', params[:country_name], params[:sub_country_name]).page(params[:page]).order('id')
+        @count = Stamp.where('country_name=? and sub_country_name=?', params[:country_name], params[:sub_country_name]).count
+      else
+        @stamps = Stamp.where('country_name=? and sub_country_name is null', params[:country_name]).page(params[:page]).order('id')
+        @count = Stamp.where('country_name=? and sub_country_name is null', params[:country_name]).count
+      end
+    else
+      @stamps = Stamp.where('country_name=?','XYZ').page(params[:page])
+    end
+
+  end
+
+
+  def search
+    @stamps = Stamp.search(params[:q]).page(params[:page]).records
+    render action: "index"
+  end
 
 
   def new
@@ -55,22 +79,6 @@ class StampsController < ApplicationController
     @stamp = Stamp.find(params[:id])
     @stamp.destroy
     redirect_to stamps_path
-  end
-
-
-  def index
-    if params[:catalog]
-      @stamps = Stamp.where('country_name=?', params[:catalog]).page(params[:page])
-    else
-      @stamps = Stamp.where('country_name=?','XYZ').page(params[:page])
-    end
-
-  end
-
-
-  def search
-    @stamps = Stamp.search(params[:q]).page(params[:page]).records
-    render action: "index"
   end
 
 
