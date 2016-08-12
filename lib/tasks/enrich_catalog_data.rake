@@ -1,6 +1,7 @@
 desc 'Enrich the catalog data'
 task :enrich_catalog_data => :environment do
 
+
   # ---------------------------------------------------------------------------------------------------------
   print '    Computing the issuer for each stamp...'
   Stamp.all.each do |stamp|
@@ -11,131 +12,81 @@ task :enrich_catalog_data => :environment do
     end
     stamp.save!
   end
-  puts 'Done.'
-
-  # # ---------------------------------------------------------------------------------------------------------
-  # print '    Removing the hardcoded string NULL...'
-  # Stamp.all.each do |stamp|
-  #   stamp.country_name = stamp.country_name == "NULL" ? nil : stamp.country_name
-  #   stamp.sub_country_name = stamp.sub_country_name == "NULL" ? nil : stamp.sub_country_name
-  #   stamp.set_description = stamp.set_description == "NULL" ? nil : stamp.set_description
-  #   stamp.set_text = stamp.set_text == "NULL" ? nil : stamp.set_text
-  #   stamp.set_designer = stamp.set_designer == "NULL" ? nil : stamp.set_designer
-  #   stamp.set_start_year = stamp.set_start_year == "NULL" ? nil : stamp.set_start_year
-  #   stamp.set_start_month = stamp.set_start_month == "NULL" ? nil : stamp.set_start_month
-  #   stamp.set_start_day = stamp.set_start_day == "NULL" ? nil : stamp.set_start_day
-  #   stamp.set_end_year = stamp.set_end_year == "NULL" ? nil : stamp.set_end_year
-  #   stamp.set_end_month = stamp.set_end_month == "NULL" ? nil : stamp.set_end_month
-  #   stamp.set_end_day = stamp.set_end_day == "NULL" ? nil : stamp.set_end_day
-  #   stamp.set_perf_info = stamp.set_perf_info == "NULL" ? nil : stamp.set_perf_info
-  #   stamp.set_type_number = stamp.set_type_number == "NULL" ? nil : stamp.set_type_number
-  #   stamp.set_watermark_number = stamp.set_watermark_number == "NULL" ? nil : stamp.set_watermark_number
-  #   stamp.sg_number = stamp.sg_number == "NULL" ? nil : stamp.sg_number
-  #   stamp.stamp_prefix = stamp.stamp_prefix == "NULL" ? nil : stamp.stamp_prefix
-  #   stamp.stamp_sg_number = stamp.stamp_sg_number == "NULL" ? nil : stamp.stamp_sg_number
-  #   stamp.stamp_pre_suffix = stamp.stamp_pre_suffix == "NULL" ? nil : stamp.stamp_pre_suffix
-  #   stamp.stamp_suffix = stamp.stamp_suffix == "NULL" ? nil : stamp.stamp_suffix
-  #   stamp.stamp_description = stamp.stamp_description == "NULL" ? nil : stamp.stamp_description
-  #   stamp.variety_description = stamp.variety_description == "NULL" ? nil : stamp.variety_description
-  #   stamp.stamp_issue_price = stamp.stamp_issue_price == "NULL" ? nil : stamp.stamp_issue_price
-  #   stamp.stamp_type_number = stamp.stamp_type_number == "NULL" ? nil : stamp.stamp_type_number
-  #   stamp.stamp_unused = stamp.stamp_unused == "NULL" ? nil : stamp.stamp_unused
-  #   stamp.stamp_used = stamp.stamp_used == "NULL" ? nil : stamp.stamp_used
-  #   stamp.variety_flag = stamp.variety_flag == "NULL" ? nil : stamp.variety_flag
-  #   stamp.stamp_hash = stamp.stamp_hash == "NULL" ? nil : stamp.stamp_hash
-  #   stamp.scott_number = stamp.scott_number == "NULL" ? nil : stamp.scott_number
-  #   stamp.save!
-  # end
-  # puts 'Done.'
+  puts 'done.'
 
 
   # ---------------------------------------------------------------------------------------------------------
-  print '    Determining the image urls for the FRANCE catalog stamps...'
-  s3=""
-  sl=""
-  n=0
-  i=0
+  print '    Determining the image to be used...'
   previous_stamp = Stamp.new
-  url_determined = false
 
-  Stamp.where('country_name=?', 'France').order('id').each do |stamp|
+  Stamp.order('issuer').order('id').each do |stamp|
 
-    # if all fields are null its all fubar
-    if stamp.stamp_type_number.nil? && stamp.set_description.nil? && s3 == ""
-      stamp.image_url = "ERROR in calculating image"
-      stamp.local_image_url = "ERROR in calculating image"
-      url_determined = true
-    end
+    begin
+      if stamp.stamp_type_number == "-"
+        node=""
+        if !stamp.sub_country_name.nil?
+          node = stamp.sub_country_name
+        else
+          node = stamp.country_name
+        end
+        #stamp.image_url = "/images/NoImageAvailable.jpg"
+        stamp.local_image_url = "/images/NoImageAvailable.jpg"
+        stamp.save!
+        previous_stamp = stamp
 
-    # start by assuming this stamp has the same image as the previous one
-    # most stamps do NOT start a new set
-    stamp.image_url = s3
-    stamp.local_image_url = sl
+      elsif stamp.stamp_type_number
+        # if the stamp_type_number field is present, that is the winner
+        node=""
+        if !stamp.sub_country_name.nil?
+          node = stamp.sub_country_name
+        else
+          node = stamp.country_name
+        end
+        #stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + node + "/Resized/" + stamp.stamp_type_number + ".tif"
+        stamp.local_image_url = "/images/" + node + "/" + stamp.stamp_type_number + '.jpg'
+        stamp.save!
+        previous_stamp = stamp
 
-    # now look for exceptions
-
-    # if the stamp-type-number field is populated take that as the TIF file name
-    if !url_determined && !stamp.stamp_type_number.nil?
-      node=""
-      if !stamp.sub_country_name.nil?
-        node = stamp.sub_country_name
-      else
-        node = stamp.country_name
+      elsif stamp.set_description
+      # if stamp_type_number is not present,
+      # parse the set_description for the "T " code
+        word_array = stamp.set_description.split(" ")
+        word_array.each_with_index do |word, i|
+          if word == "T" || word == "Type"
+            node=""
+            if !stamp.sub_country_name.nil?
+              node = stamp.sub_country_name
+            else
+              node = stamp.country_name
+            end
+            #stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + node + "/Resized/" + stamp.stamp_type_number + ".tif"
+            stamp.local_image_url = "/images/" + node + "/" + word_array[i+1] + '.jpg'
+            stamp.save!
+            previous_stamp = stamp
+          end
+        end
       end
-      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + node + "/Resized/" + stamp.stamp_type_number + ".tif"
-      stamp.local_image_url = "/images/" + node + "/" + stamp.stamp_type_number + '.jpg'
-      s3 = stamp.image_url
-      sl = stamp.local_image_url
-      i += 1
-      url_determined = true
+    rescue
     end
 
-    # assume this stamp has the same image as the previous stamp, unless their is a change in the data. this change
-    # indicates a new set or a subset.
-    if !url_determined && (stamp.country_name == previous_stamp.country_name &&
-        stamp.sub_country_name == previous_stamp.sub_country_name &&
-        stamp.sub_country_name == previous_stamp.sub_country_name &&
-        stamp.set_description == previous_stamp.set_description &&
-        stamp.set_text == previous_stamp.set_text &&
-        stamp.set_designer == previous_stamp.set_designer &&
-        stamp.set_start_year == previous_stamp.set_start_year &&
-        stamp.set_start_month == previous_stamp.set_start_month &&
-        stamp.set_start_day == previous_stamp.set_start_day &&
-        stamp.set_end_year == previous_stamp.set_end_year &&
-        stamp.set_end_month == previous_stamp.set_end_month &&
-        stamp.set_end_day == previous_stamp.set_end_day &&
-        stamp.set_perf_info == previous_stamp.set_perf_info &&
-        stamp.set_type_number == previous_stamp.set_type_number &&
-        stamp.set_watermark_number == previous_stamp.set_watermark_number)
-      stamp.image_url = previous_stamp.image_url
-      stamp.local_image_url = previous_stamp.local_image_url
-      i += 1
-      url_determined = true
+    if stamp.local_image_url.nil? && previous_stamp.local_image_url
+        #stamp.image_url = "fadsfasdfa"
+        stamp.local_image_url = previous_stamp.local_image_url
+        stamp.save!
     end
-
-    # look in the set description for the TIFF file name
-    if !url_determined && !stamp.set_description.nil? && stamp.set_description[0, 2] == "T "
-      # looks like 'T 1. Yellow gum.', where the 1 is the TIFF file name
-      node=""
-      if !stamp.sub_country_name.nil?
-        node = stamp.sub_country_name
-      else
-        node = stamp.country_name
-      end
-      stamp.image_url = "https://s3.amazonaws.com/oreo-catalog-images/CATIMAGES/IMGSTORE/" + stamp.country_name + "/Resized/" + stamp.set_description[2, 1] + ".tif"
-      stamp.local_image_url = "/images/" + node + "/" + stamp.set_description[2, 1] + ".jpg"
-      s3 = stamp.image_url
-      sl = stamp.local_image_url
-      i += 1
-      url_determined = true
-    end
-    # puts 'image_url=' + stamp.image_url
-    stamp.save!
-    previous_stamp = stamp
-    n += 1
-    url_determined = false
   end
-  puts 'Done.'
+  puts 'done.'
+
+
+
+  # ---------------------------------------------------------------------------------------------------------
+  print '    Fixing any double periods in image filenames...'
+  Stamp.all.each do |stamp|
+    stamp.image_url = stamp.image_url.gsub('..', '.') unless stamp.image_url.nil?
+    stamp.local_image_url = stamp.local_image_url.gsub('..', '.') unless stamp.local_image_url.nil?
+    stamp.save!
+  end
+  puts 'done.'
 
 
 
@@ -145,13 +96,13 @@ task :enrich_catalog_data => :environment do
     stamp.set_text = stamp.set_text.gsub('[gap]', ' ') unless stamp.set_text.nil?
     stamp.save!
   end
-  puts 'Done.'
+  puts 'done.'
 
 
   # ---------------------------------------------------------------------------------------------------------
   print '    Filling out issue dates (since the input is chronological, not deterministic)...'
   previous_stamp = Stamp.first
-  Stamp.all.order('id').each do |stamp|
+  Stamp.order('issuer').order('id').each do |stamp|
     stamp.set_start_year = previous_stamp.set_start_year if stamp.set_start_year.nil?
     stamp.set_start_month = previous_stamp.set_start_month if stamp.set_start_month.nil?
     stamp.set_start_day = previous_stamp.set_start_day if stamp.set_start_day.nil?
@@ -161,7 +112,7 @@ task :enrich_catalog_data => :environment do
     stamp.save!
     previous_stamp = stamp
   end
-  puts 'Done.'
+  puts 'done.'
 
 
   # ---------------------------------------------------------------------------------------------------------
@@ -175,7 +126,7 @@ task :enrich_catalog_data => :environment do
     stamp.computed_description += stamp.variety_flag unless stamp.variety_flag.nil?
     stamp.save!
   end
-  puts 'Done.'
+  puts 'done.'
   puts '    Ok, catalog data enrichment job complete.'.colorize(:green).bold
 
 end

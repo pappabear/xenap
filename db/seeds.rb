@@ -49,7 +49,7 @@ puts 'done.'
 
 
 print '    Organizing stamp data by country...'
-StampRaw.order('country_name').where("country_name='France'").order('id').each do |raw|
+StampRaw.order('country_name').order('id').each do |raw|
   Stamp.create!(   # issuing entity
                    :country_name => raw.country_name,
                    :sub_country_name => raw.sub_country_name,
