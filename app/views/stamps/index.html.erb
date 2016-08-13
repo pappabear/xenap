@@ -1,73 +1,52 @@
+<h3 class="title">My Catalogs</h3>
+<%= link_to "France", "/stamps?issuer=France", class: "btn btn-large btn-primary" %>
+<%= link_to "France > Alexandretta", "/stamps?issuer=France > Alexandretta", class: "btn btn-large btn-primary" %>
+<%= link_to "GB Concise", "/stamps?country_name=Great Britain", class: "btn btn-large btn-primary" %>
+<hr>
 
-  <h3 class="title">My Catalogs</h3>
-  <%= link_to "France", "/stamps?issuer=France", class: "btn btn-large btn-primary" %>
-  <%= link_to "France > Alexandretta", "/stamps?issuer=France > Alexandretta", class: "btn btn-large btn-primary" %>
-  <%= link_to "GB Concise", "/stamps?country_name=Great Britain", class: "btn btn-large btn-primary" %>
-  <hr>
+<%= form_tag search_stamps_path, method: 'get' do %>
+    <div class="input-group">
+      <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search...' %>
 
-  <%= form_tag search_stamps_path, method: 'get' do %>
-      <div class="input-group">
-        <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Search...' %>
-
-        <span class="input-group-btn">
+      <span class="input-group-btn">
             <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span>
+              <span class="glyphicon glyphicon-search"></span>
             </button>
         </span>
-      </div>
+    </div>
 
-  <% end %>
+<% end %>
 
-  <hr>
+<hr>
 
-  <h3><%= @count %> stamps found.</h3>
+<% if @stamps.count > 0 %>
 
-  <% if @stamps.count > 0 %>
+    <h3><%= @count %> stamps found.</h3>
 
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th>Country</th>
-        <th>SG Number</th>
-        <th>Description</th>
-        <th>Representative Image</th>
-        <th>Catalog Price Used (GBP)</th>
-        <th>Catalog Price Unused (GBP)</th>
-        <th>Admin</th>
-      </tr>
-      </thead>
+    <%= paginate @stamps %>
+    <ul class="users">
+    <% @stamps.each do |stamp| %>
 
-      <tbody>
+          <li>
+            <%= link_to image_tag(stamp.local_image_url, alt: stamp.image_url, height: 64) %>
+            <%= link_to stamp.issuer + ' SG ' + stamp.sg_number, set_path(stamp) %>
+            <%= stamp.computed_description %>
+          </li>
 
-      <% @stamps.__send__ controller.action_name == 'search' ? :each_with_hit : :each do |stamp, hit| %>
-          <tr>
-            <td><%= hit.try(:highlight).try(:country_name) ? hit.highlight.country_name.join.html_safe : stamp.country_name %></td>
-            <td><%= link_to stamp.sg_number, set_path(stamp) %></td>
-            <td><%= stamp.computed_description %></td>
-            <td class="text-center"><%= image_tag(stamp.local_image_url, alt: stamp.image_url, height: 64) %></td>
-            <td><%= stamp.stamp_used %></td>
-            <td><%= stamp.stamp_unused %></td>
-            <td>
-              <%= link_to 'Edit', edit_stamp_path(stamp), class: 'btn btn-success' %>
-            </td>
-          </tr>
-      <% end %>
-
-      </tbody>
-    </table>
+    <% end %>
+    </ul>
 
     <div class="text-center">
       <%= paginate @stamps %>
     </div>
 
-    <% end %>
+<% end %>
 
-    <hr>
+<hr>
 
-    <p style="text-align: center; margin-bottom: 21px">
-      <%= link_to 'New Stamp', new_stamp_path, class: 'btn btn-primary', style: 'color: #fff' %>
-    </p>
+<p style="text-align: center; margin-bottom: 21px">
+  <%= link_to 'New Stamp', new_stamp_path, class: 'btn btn-primary', style: 'color: #fff' %>
+</p>
 
-  </div>
+</div>
 
