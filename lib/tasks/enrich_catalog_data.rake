@@ -5,12 +5,21 @@ task :enrich_catalog_data => :environment do
   # ---------------------------------------------------------------------------------------------------------
   print '    Computing the issuer for each stamp...'
   Stamp.all.each do |stamp|
-    if !stamp.sub_country_name.nil?
-      stamp.issuer = stamp.country_name + " > " + stamp.sub_country_name
-    else
-      stamp.issuer = stamp.country_name
+    begin
+      if stamp.country_name.nil? && stamp.sub_country_name
+        stamp.issuer = stamp.sub_country_name
+        stamp.save!
+      elsif !stamp.country_name.nil? && stamp.sub_country_name.nil?
+        next
+      elsif stamp.country_name && stamp.sub_country_name.nil?
+        stamp.issuer = stamp.country_name
+        stamp.save!
+      else
+        stamp.issuer = stamp.country_name + " > " + stamp.sub_country_name
+        stamp.save!
+      end
+    rescue
     end
-    stamp.save!
   end
   puts 'done.'
 
