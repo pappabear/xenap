@@ -3,10 +3,9 @@
     <div class="section">
       <div class="container">
         <div class="col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
-          <h3 class="title-uppercase"><%= @stamp.country_name %> SG<%= @stamp.sg_number %></h3>
-          <h5 class="title-uppercase"><%= @stamp.sub_country_name %></h5>
+          <h3 class="title-uppercase"><%= @stamp.issuer %> SG <%= @stamp.sg_number %></h3>
 
-          <p><center><img src="<%= @stamp.image_url %>" /></center></p>
+          <p><center><%= image_tag @stamp.local_image_url %></center></p>
           <p><%= @stamp.set_designer %></p>
           <p><b><%= @stamp.set_start_year %></b> (<%= @stamp.set_start_day %> <%= @stamp.set_start_month %>)-<b><%= @stamp.set_end_year %></b> <%= @stamp.set_description %></p>
           <table border="1">

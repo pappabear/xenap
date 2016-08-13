@@ -2,19 +2,7 @@ module StampsHelper
 
 
   def find_stamps_in_set_with(stamp)
-    sql = "select * from stamps where "
-
-    if stamp.country_name.nil?
-      sql += "country_name is null and "
-    else
-      sql += "country_name = '" + stamp.country_name + "' and "
-    end
-
-    if stamp.sub_country_name.nil?
-      sql += "sub_country_name is null and "
-    else
-      sql += "sub_country_name = '" + stamp.country_name + "' and "
-    end
+    sql = "select * from stamps where issuer = '" + stamp.issuer + "' and "
 
     if stamp.set_description.nil?
       sql += "set_description is null and "
@@ -34,6 +22,7 @@ module StampsHelper
       sql += "set_designer = '" + stamp.set_designer + "' and "
     end
 
+=begin
     if stamp.set_start_year.nil?
       sql += "set_start_year is null and "
     else
@@ -69,6 +58,7 @@ module StampsHelper
     else
       sql += "set_end_day = '" + stamp.set_end_day + "' and "
     end
+=end
 
     if stamp.set_perf_info.nil?
       sql += "set_perf_info is null and "
@@ -88,6 +78,7 @@ module StampsHelper
       sql += "set_watermark_number = '" + stamp.set_watermark_number + "'  "
     end
 
+    sql += " order by issuer, id"
     set = Stamp.find_by_sql(sql)
 
 
